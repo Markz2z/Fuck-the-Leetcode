@@ -16,6 +16,8 @@ char* longestPalindrome(char* s) {
     int i, j;
     int piv1 = 0, piv2 = 0;
     int max = 0;
+    if(len==1)
+        return s;
     for(i=0;i<len;i++){
         for(j=0;j<len;j++){
             if(i>=j)
@@ -24,7 +26,7 @@ char* longestPalindrome(char* s) {
                 flag[i][j] = 0;
         }
     }
-    for(j=1;j<len;j++)
+    for(j=1;j<len;j++) {
         for(i=0;i<j;i++) {
             if(s[i]==s[j]) {
                 flag[i][j] = flag[i+1][j-1];
@@ -32,11 +34,10 @@ char* longestPalindrome(char* s) {
                     max = j-i+1;
                     piv1 = i;
                     piv2 = j;
-                    printf("i:%d max:%d\n", piv1, max);
                 }
             }
         }
-    char * res = (char* )malloc(max);
-    memcpy(res, s+piv1, max);
-    return res;
+    }
+    s[piv2+1] = 0;
+    return s+piv1;
 }
