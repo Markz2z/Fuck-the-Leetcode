@@ -1,1 +1,1 @@
-This repository contain all of the LeetCode problems I've already solved.
+The repository record all the LeetCode I have already solved!
