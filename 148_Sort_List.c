@@ -1,100 +1,61 @@
-#include "stdio.h"
-#include "stdlib.h"
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        if(head == NULL || head->next == NULL)
+            return head;
 
-struct ListNode {
-    int val;
-    struct ListNode *next;
-};
-
-int getLen(struct ListNode *head) {
-    int len = 0;
-    while(head) {
-        head = head->next;
-        len++;
+        ListNode* head1 = head;
+        ListNode* head2 = getMid(head);
+        head1 = sortList(head1);
+        head2 = sortList(head2);
+        return merge(head1, head2);
     }
-    return len;
-}
-
-void swapValue(struct ListNode *var1, struct ListNode *var2) {
-    if(var1&&var2) {
-        int temp = var1->val;
-        var1->val = var2->val;
-        var2->val = temp;
-    }
-}
-
-struct ListNode* partition(struct ListNode*head, int length) {
-	struct ListNode* result = (struct ListNode*)malloc(sizeof(struct ListNode*));
-	int count = 1;
-    if(length>1) {
-        int pivot = head->val;
-        struct ListNode *start = head;
-        struct ListNode *i;
-        for(i=head->next;length>1;length--, i=i->next){
-            if(i->val < pivot){
-                start = start->next;
-                count++;
-                swapValue(i,start);
+    ListNode* merge(ListNode* head1, ListNode* head2) {
+        ListNode* new_head = new ListNode(-1);
+        ListNode* new_tail = new_head;
+        while(head1 && head2) {
+            if(head1->val <= head2->val) {
+                new_tail->next = head1;
+                head1 = head1->next;
+            }else {
+                new_tail->next = head2;
+                head2 = head2->next;
             }
+            new_tail = new_tail->next;
+            new_tail->next = NULL;
         }
-        swapValue(head, start);
-        result->next = start;
-        result->val = count;
-        return result;
+        if(head1 != NULL)
+            new_tail->next = head1;
+        if(head2 != NULL)
+            new_tail->next = head2;
+        return new_head->next;
     }
-    result->next = head;
-  	result->val = head->val;
-    return result;
-}
-
-struct ListNode* sortList_(struct ListNode* head, int len) {
-    if(len>1 && head) {
-        struct ListNode *result = partition(head, len);
-        struct ListNode *location = result->next;
-        int loc = result->val;
-        sortList_(head, loc-1);
-        sortList_(location->next, len-loc);
+    ListNode* getMid(ListNode* head) {
+        //guaranteed that at least two nodes
+        ListNode* fast = head->next;
+        ListNode* slow = head->next;
+        ListNode* prev = head;
+        while(true) {
+            if(fast != NULL)
+                fast = fast->next;
+            else
+                break;
+            if(fast != NULL)
+                fast = fast->next;
+            else
+                break;
+            prev = slow;
+            slow = slow->next;
+        }
+        prev->next = NULL;  // cut
+        return slow;
     }
-    return head; 
-}
-
-struct ListNode* initNode(int val) {
-    struct ListNode *ptr = (struct ListNode*)malloc(sizeof(struct ListNode));
-    if(ptr){
-        ptr->val = val;
-        return ptr;
-    }
-    return NULL;
-}
-
-struct ListNode* sortList(struct ListNode* head) {
-    return sortList_(head, getLen(head));
-}
-
-void main() {
-    struct ListNode *n1 = initNode(4);
-    struct ListNode *n2 = initNode(1);
-    struct ListNode *n3 = initNode(2);
-    struct ListNode *n4 = initNode(3);
-    struct ListNode *n5 = initNode(5);
-    struct ListNode *n6 = initNode(6);
-    struct ListNode *n7 = initNode(7);
-    struct ListNode *n8 = initNode(9);
-    struct ListNode *n9 = initNode(8);
-    struct ListNode *n10 = initNode(10);
-    n1->next = n2;
-    n2->next = n3;
-    n3->next = n4;
-    n4->next = n5;
-    n5->next = n6;
-    n6->next = n7;
-    n7->next = n8;
-    n8->next = n9;
-    n9->next = n10;
-    n10->next = NULL;
-    sortList(n1);
-    for(struct ListNode *i=n1;i->next!=NULL;i=i->next){
-        printf("%d ", i->val);
-    }
-    printf("/n");
-}
+};
