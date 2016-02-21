@@ -16,15 +16,6 @@ void merge(int* nums1, int len, int* nums2) {
     }
 }
 
-// void split(int *array1, int start, int last, int *array2) {
-// 	if(start + 1 < last) {
-// 		int mid = (start + last) / 2;
-// 		split(array1, start, mid, array2);
-// 		split(array1, mid, last, array2);
-// 		merge(array1, start, mid, last, array2);
-// 	}
-// }
-
 void split(int *array1, int len, int *array2) {
     if(len>1) {
         split(array1, len/2, array2);
