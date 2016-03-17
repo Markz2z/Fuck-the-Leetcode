@@ -1,47 +1,77 @@
-//堆筛选函数
-//已知H[start~end]中除了start之外均满足堆的定义
-//本函数进行调整，使H[start~end]成为一个大顶堆
-typedef int ElemType;
-void HeapAdjust(ElemType H[], int start, int end)
-{
-    ElemType temp = H[start];
-    for(int i = 2*start + 1; i<=end; i*=2)
-    {
-        //因为假设根结点的序号为0而不是1，所以i结点左孩子和右孩子分别为2i+1和2i+2
-        if(i<end && H[i]<H[i+1])//左右孩子的比较
-        {
-            ++i;//i为较大的记录的下标
-        }
+/*
+* Get Top k num in an unsorted list
+* Date:3/17/2016
+* Author:puer
+*/
 
-        if(temp > H[i])//左右孩子中获胜者与父亲的比较
-        {
-            break;
-        }
+#include "stdio.h"
 
-        //将孩子结点上位，则以孩子结点的位置进行下一轮的筛选
-        H[start]= H[i];
-        start = i;
-        
-    }
-
-    H[start]= temp; //插入最开始不和谐的元素
+void swap(int array[], int idx1, int idx2) {
+    int temp = array[idx1];
+    array[idx1] = array[idx2];
+    array[idx2] = temp;
 }
 
-void HeapSort(ElemType A[], int n)
-{
-    //先建立大顶堆
-    for(int i=n/2; i>=0; --i) {
-        HeapAdjust(A,i,n);
-    }
-    //进行排序
-    for(int i=n-1; i>0; --i) {
-        //最后一个元素和第一元素进行交换
-        ElemType temp=A[i];
-        A[i] = A[0];
-        A[0] = temp;
+//guarantee the array[start] is the biggest between array[start-end]
+void HeapAdjust(int array[], int start, int end) {
+    int origin = array[start];
 
-        //然后将剩下的无序元素继续调整为大顶堆
-        HeapAdjust(A,0,i-1);
+    for(int i=start*2+1;i<=end;i*=2) {
+        if(i<end && array[i] < array[i+1])
+            ++i;
+        if(origin>array[i])
+            break;
+        array[start] = array[i];
+        start = i;
+    }
+    array[start] = origin;
+}
+
+void HeapSort(int array[], int len) {
+
+    for(int i=len/2;i>=0;--i) {
+        HeapAdjust(array, i, len-1);
     }
 
+    for(int i=len-1;i>0;--i) {
+        swap(array, 0, i);
+        HeapAdjust(array, 0, i-1);
+    }
+}
+
+void HeapAdjust2(int array[], int start, int end) {
+    int origin = array[start];
+    for(int i=2*start+1;i<=end;i*=2) {
+        if(i<end && array[i+1] < array[i])
+            ++i;
+        if(origin<array[i])
+            break;
+        array[start] = array[i];
+        start = i;
+    }
+    array[start] = origin;
+}
+
+int* HeapSort2(int k, int array[], int len) {
+
+    int list[k];
+    for(int i=len/2;i>=0;--i) {
+        HeapAdjust2(array, i, len-1);
+    }
+
+    for(int i=len-1, j=0;i>0 && j<k;--i, ++j) {
+        list[j] = array[0];
+        swap(array, 0, i);
+        HeapAdjust2(array, 0, i-1);
+    }
+    return list;
+}
+
+int main() {
+    int num[10] = {9,2,3,5,1,4,8,7,6,10};
+    int k = 5;
+    int* list = HeapSort2(k, num, 10);
+    for(int i=0;i<k;i++)
+        printf("%d\n", list[i]);
+    return 1;
 }
