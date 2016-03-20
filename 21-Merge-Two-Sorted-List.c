@@ -15,6 +15,8 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2) {
 	struct ListNode* ptr_2 = l2;
 	struct ListNode* head = NULL;
 	struct ListNode* current = NULL;
+
+	//init the head pointer
 	if(ptr_1 && ptr_2) {
 		if(ptr_1->val > ptr_2->val) {
 			head = ptr_2;
@@ -31,6 +33,8 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2) {
 		return NULL;
 	}
 	current = head;
+
+	//merge the two linked list
 	while(ptr_1 || ptr_2) {
 		if(ptr_1 && ptr_2) {
 			if(ptr_1->val > ptr_2->val) {
