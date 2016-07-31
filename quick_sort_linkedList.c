@@ -26,6 +26,7 @@ Node* swap(Node** node1_prev, Node** node1, Node** node1_succ, Node** node2_prev
 Node* partition(Node* prev, Node** ptr_head, Node* tail) {
     Node* head = *ptr_head;
     int pivot = head->val;
+    printf("pivot:%d\n", pivot);
     Node* cur_min_prev = prev;
     Node* cur_min = head;
     Node* cur_min_succ = head->next;
@@ -35,34 +36,54 @@ Node* partition(Node* prev, Node** ptr_head, Node* tail) {
     Node* cur_prev = head;
     Node* cur_succ = cur->next==NULL?NULL:cur->next;
     Node* real_tail = NULL;
-    while(cur!=tail) {
+    while(cur!=tail && cur) {
+        if(cur->val!=5)
+            printf("val:%d pivot:%d\n", cur->val, pivot);
         if(cur->val < pivot) {
             cur_min_prev = cur_min;
-            cur_min = cur_min->next;
-            cur_min_succ = cur_min->next;
-
-            swap(&cur_min_prev, &cur_min, &cur_min_succ, &cur_prev, &cur, &cur_succ);
-            /*cur_min_prev->next = cur;
+            if(cur_min)
+                cur_min = cur_min->next;
+            else
+                cur_min = NULL;
+            if(cur_min)
+                cur_min_succ = cur_min->next;
+            else
+                cur_min_succ = NULL;
+            printf("swap %d, %d\n", cur_min->val, cur->val);
+            //swap(&cur_min_prev, &cur_min, &cur_min_succ, &cur_prev, &cur, &cur_succ);
+            cur_min_prev->next = cur;
             cur->next = cur_min_succ;
             cur_prev->next = cur_min;
             cur_min->next = cur_succ;
             cur = cur_min;
-            cur_min = cur_min_prev->next;*/
+            cur_min = cur_min_prev->next;
         }
         real_tail = cur;
+        cur_prev = cur;
         cur = cur->next;
+        if(cur)
+            cur_succ = cur->next;
+        else
+            cur_succ = NULL;
     }
     
-    cur_min_prev->next = head;
-    head->next = cur_min_succ;
     cur_min->next = head->next;
     mid = head;
+
+    if(cur_min_prev && cur_min_prev->next) {
+        cur_min_prev->next = head;
+    }
+    if(head->next) {
+        head->next = cur_min_succ;
+    }
+
     head = cur_min;
 
     if(prev) 
         prev->next = head;
-    if(tail)
+    if(tail && real_tail)
         real_tail->next = tail;
+
     return mid;
 }
 
@@ -99,7 +120,7 @@ Node* create_list(int arr[], int len) {
 
 void print(Node* head) {
     while(head) {
-        printf("%d\n", head->val);
+        printf("!%d\n", head->val);
         head = head->next;
     }
 }
@@ -107,7 +128,8 @@ void print(Node* head) {
 int main() {
     int arr[5] = {1,3,5,2,-5};
     Node* head = create_list(arr, 5);
-    quicksort(NULL, head, NULL);
+    //quicksort(NULL, head, NULL);
+    partition(NULL, &head, NULL);
     print(head);
     return 1;
 }

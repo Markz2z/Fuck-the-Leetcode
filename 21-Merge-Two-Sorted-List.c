@@ -48,11 +48,11 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2) {
 			}
 		}else if(!ptr_1 && ptr_2) {
 			current->next = ptr_2;
-			current = current->next;
+			//current = current->next;
 			return head;
 		}else if(!ptr_2 && ptr_1) {
 			current->next = ptr_1;
-			current = current->next;
+			//current = current->next;
 			return head;
 		}
 	}

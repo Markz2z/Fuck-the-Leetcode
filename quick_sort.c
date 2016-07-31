@@ -1,6 +1,6 @@
 #include "stdio.h"
 
-int partition(int* seq, int start, int end) {
+int partition(int seq[], int start, int end) {
     if(end>start) {
         int pivot = seq[start];
         while(end>start){
@@ -14,7 +14,7 @@ int partition(int* seq, int start, int end) {
     return start;
 }
 
-void quick_sort(int* seq, int start, int end) {
+void quick_sort(int seq[], int start, int end) {
     int location = 0;
     if(end>start) {
         location = partition(seq, start, end);

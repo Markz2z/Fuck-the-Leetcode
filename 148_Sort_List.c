@@ -19,24 +19,24 @@ public:
         return merge(head1, head2);
     }
     ListNode* merge(ListNode* head1, ListNode* head2) {
-        ListNode* new_head = new ListNode(-1);
-        ListNode* new_tail = new_head;
+        ListNode* dummy = new ListNode(-1);
+        ListNode* tail = dummy;
         while(head1 && head2) {
             if(head1->val <= head2->val) {
-                new_tail->next = head1;
+                tail->next = head1;
                 head1 = head1->next;
             }else {
-                new_tail->next = head2;
+                tail->next = head2;
                 head2 = head2->next;
             }
-            new_tail = new_tail->next;
-            new_tail->next = NULL;
+            tail = tail->next;
+            tail->next = NULL;
         }
         if(head1 != NULL)
-            new_tail->next = head1;
+            tail->next = head1;
         if(head2 != NULL)
-            new_tail->next = head2;
-        return new_head->next;
+            tail->next = head2;
+        return dummy->next;
     }
     ListNode* getMid(ListNode* head) {
         //guaranteed that at least two nodes

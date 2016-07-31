@@ -12,7 +12,6 @@ bool isSym(struct TreeNode* left, struct TreeNode* right) {
 	}
 }
 
-
 bool isSymmetric(struct TreeNode* root) {
 	if(root) {
 		return isSym(root->left, root->right);
