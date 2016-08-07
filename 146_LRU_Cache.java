@@ -1,5 +1,5 @@
 public class LRUCache {
-    private class Node{
+    private class Node {
         Node prev;
         Node next;
         int key;
@@ -25,7 +25,7 @@ public class LRUCache {
     }
 
     public int get(int key) {
-        if( !hs.containsKey(key)) {
+        if (!hs.containsKey(key)) {
             return -1;
         }
 

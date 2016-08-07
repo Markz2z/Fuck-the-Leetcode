@@ -8,14 +8,14 @@ public:
     int guessNumber(int n) {
         if(guess(n) == 0) return n;
         int flag = 0, left = 1, right = n;
-        int predict = right / 2;
+        int predict = right >>> 1;
         while((flag = guess(predict)) != 0) {
         	if(flag == 1) {
                 left = predict;
         	} else {
         		right = predict;
         	}
-        	predict = left + (right - left) / 2;
+        	predict = left + (right - left) >>> 1;
         }
         return predict;
     }
