@@ -12,8 +12,8 @@ int getBit(int num, int* index) {
 
 int reverse(int x) {
     int bit[10];
+    memset(bit, 0 ,10 * sizeof(int));
     int is_positive = x > 0? 1:0; 
-    memset(bit, 0 ,10*sizeof(int));
     x = is_positive? x : -x;
     int count = getBit(x, bit);
     int i, j;

@@ -16,11 +16,7 @@ int getMaxDepth(struct TreeNode* root, int depth) {
 		if(root->right) {
 			right = getMaxDepth(root->right, depth);
 		}
-		if(left >= right) {
-			return left;
-		}else if(right > left) {
-			return right;
-		}
+		return left >= right ? left : right;
 	}
 	return depth;
 }
@@ -29,7 +25,7 @@ int maxDepth(struct TreeNode* root) {
     if(root) {
     	int left = getMaxDepth(root->left, 1);
     	int right = getMaxDepth(root->right, 1);
-    	return left>right? left:right;
+    	return left > right? left : right;
     }
     return 0;
 }

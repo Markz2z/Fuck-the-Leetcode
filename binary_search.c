@@ -5,11 +5,11 @@ int binary_search(int* num, int length, int target) {
     int low = 0;
     int high = length-1;
     int mid;
-    for(mid=(high+low)/2;high>=low;mid=(high+low)/2) {
+    for(mid = (high + low) / 2; high >= low; mid = low + (high - low) / 2) {
         if(num[mid]>target) {
-            high = mid-1;
-        }else if(num[mid]<target) {
-            low = mid+1;
+            high = mid - 1;
+        }else if(num[mid] < target) {
+            low = mid + 1;
         }else {
             return 1;
         }

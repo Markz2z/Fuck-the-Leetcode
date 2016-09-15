@@ -23,23 +23,21 @@ int scanAndFindMin(int* vec, int len) {
 }
 
 int coinChange(int* coins, int coinsSize, int amount) {
-    int i,j;
+    int i, j;
     amount++;
     int res[amount];
     int temp[coinsSize];
-    init(res,amount,0);
+    init(res, amount, 0);
     res[0] = 0;
-    for(i=1;i<amount;i++) {
+    for(i = 1; i < amount; i++) {
         init(temp, coinsSize, 0);
-        for(j=0;j<coinsSize;j++){
+        for(j = 0; j < coinsSize; j++){
             if(i>=coins[j]) { 
                 if(res[i-coins[j]]>=0) {
                     temp[j] = res[i-coins[j]] + 1;
                 }
             }
         }
-        //quickSort(temp,0,coinsSize-1);
-        //res[i] = findMin(temp, coinsSize);
         res[i] = scanAndFindMin(temp, coinsSize);
     }
     return res[amount-1];
