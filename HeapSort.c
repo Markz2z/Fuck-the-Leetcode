@@ -41,7 +41,7 @@ void HeapSort(int array[], int len) {
 
 void HeapAdjust2(int array[], int start, int end) {
     int origin = array[start];
-    for(int i=2*start+1;i<=end;i*=2) {
+    for(int i = 2 * start + 1; i <= end; i *= 2) {
         if(i+1<=end && array[i+1] < array[i])
             ++i;
         if(origin < array[i])
@@ -54,11 +54,11 @@ void HeapAdjust2(int array[], int start, int end) {
 
 int* HeapSort2(int k, int array[], int len) {
     int list[k];
-    for(int i=len/2;i>=0;--i) {
-        HeapAdjust2(array, i, len-1);
+    for(int i = len/2; i >= 0; --i) {
+        HeapAdjust2(array, i, len - 1);
     }
 
-    for(int i=len-1, j=0;i>0 && j<k;--i, ++j) {
+    for(int i = len - 1, j = 0; i > 0 && j < k; --i, ++j) {
         list[j] = array[0];
         swap(array, 0, i);
         HeapAdjust2(array, 0, i-1);

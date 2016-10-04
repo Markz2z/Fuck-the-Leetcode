@@ -13,7 +13,7 @@ public:
     	if(root) {
     		if(!root->left && !root->right && sum==root->val)
     			return true;
-    		return hasPathSum(root->left, sum-root->val) || hasPathSum(root->right, sum-root->val);
+    		return hasPathSum(root->left, sum - root->val) || hasPathSum(root->right, sum - root->val);
     	}
     	return false;
     }
