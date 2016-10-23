@@ -44,7 +44,7 @@ public:
                 tree_mid = new TreeNode(mid->val);
                 TreeNode* left_root = nullptr;
                 TreeNode* right_root = nullptr;
-                if (mid!=head) left_root = sortedListToBST(head);
+                if (mid != head) left_root = sortedListToBST(head);
                 if (mid) right_root = sortedListToBST(mid->next);
                 tree_mid->left = left_root;
                 tree_mid->right = right_root;
