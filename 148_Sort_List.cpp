@@ -22,7 +22,7 @@ public:
         }
         if (prev) prev->next = nullptr;
         return slow;
-    } 
+    }
 
     ListNode* mergeList(ListNode* list1, ListNode* list2) {
         if (!list1) return list2;
