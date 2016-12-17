@@ -14,7 +14,7 @@ public:
 			return calculate(layer-1, idx) + calculate(layer-1, idx-1);
 		}
 	}
-。。
+
     vector<int> getRow(int rowIndex) {
     	vector<int> result;
 		for(int i=1;i<=rowIndex+1;++i) {
