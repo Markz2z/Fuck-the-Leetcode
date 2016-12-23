@@ -6,7 +6,7 @@ struct ListNode {
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
 };
- 
+
 class Solution {
 public:
     void swap(ListNode* node1_prev, ListNode* node1, ListNode* node1_succ, 
@@ -28,15 +28,14 @@ public:
         }
     }
 
-    ListNode* partition(ListNode* head_prev, ListNode* head, ListNode* end) {
-        ListNode *cur = head->next, *left = head;
+    ListNode* partition(ListNode* head_prev, ListNode* end) {
+        ListNode *head = head_prev->next;
+        if (!head) return nullptr;
+        ListNode *cur = head->next, *left = head, *prev = head, *left_prev = head_prev;
         int pivot = head->val;
-        ListNode *prev = head, *left_prev = nullptr;
         while(cur && cur != end) {
             if (cur->val < pivot) {
-                if (cur != left->next) {
-                    swap(prev, cur, cur->next, left, left->next, left->next->next);
-                }
+                swap(prev, cur, cur->next, left, left->next, left->next->next);
                 left_prev = left;
                 left = left->next;
             }
@@ -47,11 +46,12 @@ public:
         return head;
     }
 
-    ListNode* sortList(ListNode* head_prev, ListNode* head, ListNode* end) {
+    ListNode* sortList(ListNode* head_prev, ListNode* end) {
+        ListNode* head = head_prev->next;
         if (head && head->next && head != end) {
-            ListNode* mid = partition(head_prev, head, end);
-            sortList(head_prev, head_prev->next, mid);
-            sortList(mid, mid->next, end);
+            ListNode* mid = partition(head_prev, end);
+            sortList(head_prev, mid);
+            sortList(mid, end);
         }
         return head;
     }
@@ -59,42 +59,7 @@ public:
     ListNode* sortList(ListNode* head) {
         ListNode* dummy = new ListNode(-1);
         dummy->next = head;
-        sortList(dummy, head, NULL);
+        sortList(dummy, NULL);
         return dummy->next;
     }
 };
-
-void print(ListNode* root) {
-    while(root) {
-        cout << root->val << endl;
-        root = root->next;
-    }
-}
-
-int main() {
-    ListNode* node1 = new ListNode(1);
-    ListNode* cur = node1;
-
-    cur->next = new ListNode(2);
-    cur = cur->next;
-
-    cur->next = new ListNode(3);
-    cur = cur->next;
-
-    cur->next = new ListNode(4);
-    cur = cur->next;
-
-    cur->next = new ListNode(5);
-    cur = cur->next;
-
-    cur->next = new ListNode(5);
-    cur = cur->next;
-
-    cur->next = new ListNode(-2);
-    cur = cur->next;
-
-    Solution s;
-
-    print(s.sortList(node1));
-    return 1;
-}
