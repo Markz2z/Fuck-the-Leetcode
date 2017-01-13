@@ -9,6 +9,20 @@ class Trie {
   public:
     Trie() : root_(new TrieNode()) { }
 
+    ~Trie() {
+		if (root_==NULL) return;
+		queue<TrieNode*> queue_;
+		queue_.push(root_);
+		while (queue_.size() > 0) {
+		    TrieNode* cur = queue_.front();
+			queue_.pop();
+			for (int i = 0; i < 26; ++i) {
+			    if (cur->next_[i]!=NULL) queue_.push(cur->next_[i]);
+			}
+			delete cur;
+		}
+	}
+
     TrieNode* get_root() {
 	    return root_;
 	}
